@@ -2,26 +2,40 @@
 title: " population_structure"
 output: html_document
 editor_options: 
-chunk_output_type: console
+output_type: html_document
 ---------------------------------
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+## Extraction of individual isolates with phenotypic data so that the phenotype of the isolate corresponds to the SNPs of the isolate
+## The phenotypic data of the 20 cultivars were all derived from the same isolates, so only one extraction of the SNPs of the corresponding isolates was required
+
+
+
 ```{bash}
+## Compression of filtered vcf files
 AUS_372_biallelic.maf0.5.miss0.9.nomiss_500bp_SNPonly.recode.vcf -Oz -o snp.vcf.gz
 
+## Use bcfttools to generate a new vcf file containing the SNPs of the isolates that have phenotypic data.
 bcftools view snp.vcf.gz -s WAI852,WAI864,WAI870,WAI878,WAI884,WAI893,WAI894,WAI898,WAI900,WAI904,WAI910,WAI915,WAI918,WAI927,WAI950,WAI954,WAI958,WAI962,WAI964,WAI965,WAI971,WAI978,WAI986,WAI992,WAI996,WAI1641,WAI1643,WAI1646,WAI1652,WAI1657,WAI1658,WAI1659,WAI1662,WAI1667,WAI1669,WAI1691,WAI1696,WAI1698,WAI1718,WAI1724,WAI1730,WAI1741,WAI1820,WAI1822,WAI1848,WAI1849,WAI1850,WAI1851,WAI1852,WAI1858,WAI1859,WAI1875,WAI1876,WAI1877,WAI1895,WAI1903,WAI1904,WAI1922,WAI2045,WAI2047,WAI2061,WAI2073,WAI2077,WAI2203,WAI2204,WAI2206,WAI2210,WAI2216,WAI2226,WAI2228,WAI2230,WAI2232,WAI2827,WAI2843,WAI2845,WAI2849,WAI3172,WAI3173,WAI3895,WAI3896,WAI3898,WAI3899,WAI3900,WAI3902,WAI3903,WAI3905,WAI3906,WAI3907,WAI3908,WAI3909,WAI3910,WAI3911,WAI3912,WAI3913 -o snp_2.vcf
+```
 
+
+
+```{bash}
+## Convert vcf files to ped and map files and generate bed files based on these two files
 vcftools  --vcf snp_2.vcf --plink --out snp_3
 
-```{bash}
-
 plink --file snp_3 --make-bed --out snp_4
+```
+
+
 
 ```{bash}
-
+## Analysis of population structure with admixture and visualisation of the results
 for K in 1 2 3 4 5; do admixture --cv snp_4.bed $K | tee log${K}.out; done
 grep -h CV log*.out
 
