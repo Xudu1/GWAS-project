@@ -10,6 +10,8 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
+
+
 ```{bash}
 AUS_372_biallelic.maf0.5.miss0.9.nomiss_500bp_SNPonly.recode.vcf -Oz -o snp.vcf.gz
 
