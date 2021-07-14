@@ -1,0 +1,46 @@
+-----------------------------------
+title: "VCF_filtering_and_PCA"
+author: "Megan McDonald"
+date: "07/05/2020"
+output: html_doccment
+editor_options: 
+  chunk_output_type: console
+---------------------------------------------
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```{bash}
+AUS_372_biallelic.maf0.5.miss0.9.nomiss_500bp_SNPonly.recode.vcf -Oz -o snp.vcf.gz
+
+bcftools view snp.vcf.gz -s WAI852,WAI864,WAI870,WAI878,WAI884,WAI893,WAI894,WAI898,WAI900,WAI904,WAI910,WAI915,WAI918,WAI927,WAI950,WAI954,WAI958,WAI962,WAI964,WAI965,WAI971,WAI978,WAI986,WAI992,WAI996,WAI1641,WAI1643,WAI1646,WAI1652,WAI1657,WAI1658,WAI1659,WAI1662,WAI1667,WAI1669,WAI1691,WAI1696,WAI1698,WAI1718,WAI1724,WAI1730,WAI1741,WAI1820,WAI1822,WAI1848,WAI1849,WAI1850,WAI1851,WAI1852,WAI1858,WAI1859,WAI1875,WAI1876,WAI1877,WAI1895,WAI1903,WAI1904,WAI1922,WAI2045,WAI2047,WAI2061,WAI2073,WAI2077,WAI2203,WAI2204,WAI2206,WAI2210,WAI2216,WAI2226,WAI2228,WAI2230,WAI2232,WAI2827,WAI2843,WAI2845,WAI2849,WAI3172,WAI3173,WAI3895,WAI3896,WAI3898,WAI3899,WAI3900,WAI3902,WAI3903,WAI3905,WAI3906,WAI3907,WAI3908,WAI3909,WAI3910,WAI3911,WAI3912,WAI3913 -o snp_2.vcf
+
+vcftools  --vcf snp_2.vcf --plink --out snp_3
+
+plink --file snp_3 --make-bed --out snp_4
+
+```
+
+```{bash}
+
+run_pipeline.pl -importGuess snp_4.hmp.txt -DistanceMatrixPlugin -endPlugin -export snp_4_genotype_distance.txt
+
+run_pipeline.pl -importGuess snp_4.hmp.txt -KinshipPlugin -method Centered_IBS -endPlugin -export snp_kinship.txt -exportType SqrMatrix
+
+run_pipeline.pl -fork1 -importGuess chr4.hmp.txt -PrincipalComponentsPlugin -covariance true -endPlugin -export output -runfork1
+
+
+```{bash}
+
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r Arina_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export glm_GWAS
+
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r  Arina_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
+
+```{bash}
+
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export glm_GWAS
+
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
+
+```{bash}
+
