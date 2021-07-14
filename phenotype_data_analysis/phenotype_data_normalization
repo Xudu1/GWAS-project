@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Two methods "standardization" and "normalization" were used to scale the data for each of the three phenotypes Nec, Pyc，and STB 
 
+
+```{r}
 library(caret)
 library(ggplot2)
 
@@ -27,6 +29,8 @@ norm1 <- log(norm1)
 
 write.csv(norm1, file ="/Users/daffy/Downloads/GWAS/phenotyped/Nec_phenotype_norm1.csv")
 
+
+
 ## Plot the data scaling results
 p <- read.csv('norm1_log.csv',header=T)
 df <- as.data.frame(p)
@@ -34,11 +38,11 @@ df <- as.data.frame(p)
 p <- ggplot(data = p,
             mapping = aes(x = Nec))
 p + geom_histogram()
+```
+
+
 
 ```{r}
-
-
-
 ## Scaling of the phenotypic data of Nec to the range of 0-1 based on the normalization method
 preproc2 <- preProcess(dat[,c(2:4)], method=c("range"))
 
@@ -55,11 +59,11 @@ df <- as.data.frame(p)
 p <- ggplot(data = p,
             mapping = aes(x = Nec))
 p + geom_histogram()
-
-```{r}
+```
 
 ##-----------------------------------------------------------------------------------
 
+```{r}
 ##Data scaling for phenotype Pyc
 dat <- read.csv("/Users/daffy/Downloads/Pyc_phenotype.csv")
 preproc1 <- preProcess(dat[,c(2:4)], method=c("center", "scale"))
@@ -78,9 +82,11 @@ df <- as.data.frame(p)
 p <- ggplot(data = p,
             mapping = aes(x = Pyc))
 p + geom_histogram()
+```
+
+
 
 ```{r}
-
 preproc2 <- preProcess(dat[,c(2:4)], method=c("range"))
 
 norm2 <- predict(preproc2, dat[,c(2:4)])
@@ -95,10 +101,11 @@ df <- as.data.frame(p)
 p <- ggplot(data = p,
             mapping = aes(x = Pyc))
 p + geom_histogram()
-
-```{r}
+```
 
 ##---------------------------------------------------------------------------------
+
+```{r}
 ##Data scaling for phenotype STB
 dat <- read.csv("/Users/daffy/Downloads/STB_phenotype.csv")
 preproc1 <- preProcess(dat[,c(2:4)], method=c("center", "scale"))
@@ -117,9 +124,11 @@ df <- as.data.frame(p)
 p <- ggplot(data = p,
             mapping = aes(x = STB))
 p + geom_histogram()
+```
+
+
 
 ```{r}
-
 preproc2 <- preProcess(dat[,c(2:4)], method=c("range"))
 
 norm2 <- predict(preproc2, dat[,c(2:4)])
@@ -134,5 +143,4 @@ df <- as.data.frame(p)
 p <- ggplot(data = p,
             mapping = aes(x = STB))
 p + geom_histogram()
-
-```{r}
+```
