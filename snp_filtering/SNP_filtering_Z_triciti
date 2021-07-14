@@ -1,11 +1,11 @@
----
+---------------------------------
 title: "VCF_filtering_and_PCA"
-author: "Megan McDonald"
+author: "Megan_McDonald"
 date: "07/05/2020"
 output: html_doccment
 editor_options: 
   chunk_output_type: console
----
+------------------------------------
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
