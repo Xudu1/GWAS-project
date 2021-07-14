@@ -23,7 +23,6 @@ run_pipeline.pl -SortGenotypeFilePlugin -inputFile snp_2.vcf -outputFile snp_3 -
 
 ## Further conversion of the sorted vcf file to a heatmap file
 run_pipeline.pl -fork1 -vcf snp_3.vcf  -export snp_4 -exportType Hapmap -runfork1
-
 ```
 
 
@@ -41,6 +40,7 @@ run_pipeline.pl -fork1 -importGuess chr4.hmp.txt -PrincipalComponentsPlugin -cov
 ```
 
 
+
 ```{bash}
 ## The following code shows only the GWAS analysis pepelines for the cultivars Arina and AUS4204, while the remaining cultivars share the same code
 
@@ -55,6 +55,5 @@ run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -f
 run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export glm_GWAS
 
 run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
-
 ```
 
