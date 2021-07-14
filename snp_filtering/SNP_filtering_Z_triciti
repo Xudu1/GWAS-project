@@ -29,7 +29,7 @@ vcftools --vcf $VCF --remove-filtered-all --recode --out $OUTVCF
 use keepfile to filter out NZ isolates from our big VCF file
 ```{bash}
 conda activate gatk4
-cd /Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/joint_genotype/
+cd /Users/daffy/Downloads/GWAS/VCF
 
 BASE_VCF="AUS_NZ_450.filtered1"
 OUT_VCF="AUS_375.biallelic"
@@ -86,7 +86,7 @@ vcftools --vcf ${FINAL_VCF}.recode.vcf --remove remove.indv --recode --out ${OUT
 
 ## Make PCA for VCF file to get a sense of where all AUS isolates are sitting
 Note after running once I will comment out some of these steps because the genofiles XXXX.gds only need to be created once
-#snpgdsVCF2GDS("./joint_genotype/AUS372.biallelic.maf0.5.miss0.9.nomiss.recode.vcf", "AUS_372.gds")
+#snpgdsVCF2GDS("cd /Users/daffy/Downloads/GWAS/VCF/AUS372.biallelic.maf0.5.miss0.9.nomiss.recode.vcf", "AUS_372.gds")
 ```{r}
 library("ggplot2")
 library("SNPRelate")
@@ -95,7 +95,7 @@ library("plotly")
 
 ```{r}
 getwd()
-setwd("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/")
+setwd(cd "/Users/daffy/Downloads/GWAS/VCF/")
 getwd()
 snpgdsVCF2GDS("./joint_genotype/AUS372.biallelic.maf0.5.miss0.9.nomiss.recode.vcf", "AUS_372.gds")
 genofile1<-openfn.gds("AUS_372.gds")
@@ -160,7 +160,7 @@ This code reads in our filtered vcf with only 25 isolates and makes a small PCA 
 
 ```{r}
 getwd()
-setwd("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/")
+setwd("cd /Users/daffy/Downloads/GWAS/VCF")
 snpgdsVCF2GDS("./joint_genotype/AUS25_Lorikeet.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_25.gds")
 genofile25<-openfn.gds("AUS_25.gds")
 
@@ -204,7 +204,7 @@ This code reads in our filtered vcf with only 105 isolates and makes a small PCA
 
 ```{r}
 getwd()
-setwd("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/")
+setwd("cd /Users/daffy/Downloads/GWAS/VCF")
 snpgdsVCF2GDS("./joint_genotype/AUS102_phenotyped.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_102.gds")
 genofile102<-openfn.gds("AUS_102.gds")
 
@@ -218,7 +218,7 @@ pca.dat1 <- data.frame(eigen1=AUS102_pca1$eigenvect[,1],eigen2=AUS102_pca1$eigen
 
 PCA_AUS102<-ggplot(pca.dat1, aes(x=eigen1, y=eigen2, color=pop)) +geom_point(size=0.01)+ geom_text(aes(label=samplename))
 PCA_AUS102
-ggsave("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/01_VCF_quality_check/PCA_AUS102.pdf", PCA_AUS102, height = 12,width=16,dpi=300,units = "cm")
+ggsave("cd /Users/daffy/Downloads/GWAS/VCF/PCA_AUS102.pdf", PCA_AUS102, height = 12,width=16,dpi=300,units = "cm")
 
 interactive_AUS102<-ggplotly(PCA_AUS102)
 interactive_AUS102
