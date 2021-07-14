@@ -1,19 +1,19 @@
----
+----------------------------------------------------
 title: "PlotFilteredSNPS"
 output: html_document
-editor_options: 
-  chunk_output_type: console
----
+editor: Megan
+chunk_output_type: console
+------------------------------------------------------
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## First replace FILTERED1,FILTERED5 with simple FILTER in .tab file
+## Visualisation of the quality score of SNPs
 
  # Import VCF files
 ```{r}
 getwd()
-UNFILT<-read.delim("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/June2019_rajinMappedReads/GATK_vcfs/joint_genotype/AUS_NZ_450.plain.first.tab", header=T, stringsAsFactors=T)
+UNFILT<-read.delim("/Users/daffy/Downloads/GWAS/AUS_NZ_450.plain.first.tab", header=T, stringsAsFactors=T)
 
 head(UNFILT)
 library("ggplot2")
