@@ -1,6 +1,7 @@
 # GWAS-project
 
-##Individual project
+##Using Genome-wide association to identify virulence factors in an important global wheat pathogen Zymoseptoria tritici
+
 
 ##General Methods
 
