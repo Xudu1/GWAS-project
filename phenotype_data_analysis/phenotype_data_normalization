@@ -1,20 +1,22 @@
----
+-------------------------------
 title: "VCF_filtering_and_PCA"
 author: "Xu Du"
 date: "17/05/2021"
 output: html_doccment
-editor_options: 
-  chunk_output_type: console
----
+---------------------------------
 
-```{r}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-setwd("Users/daffy/Downloads/GWAS/phenotype)
+## Two methods "standardization" and "normalization" were used to scale the data for each of the three phenotypes Nec, Pyc，and STB 
 
 library(caret)
 library(ggplot2)
 
 dat <- read.csv("/Users/daffy/Downloads/GWAS/phenotyped/Nec_phenotype.csv")
+
+## Scaling of the phenotypic data of Nec to a mean of 0 and a standard deviation of 1 based on the standardizaiton method
 preproc1 <- preProcess(dat[,c(2:4)], method=c("center", "scale"))
 
 norm1 <- predict(preproc1, dat[,c(2:4)])
@@ -25,6 +27,7 @@ norm1 <- log(norm1)
 
 write.csv(norm1, file ="/Users/daffy/Downloads/GWAS/phenotyped/Nec_phenotype_norm1.csv")
 
+## Plot the data scaling results
 p <- read.csv('norm1_log.csv',header=T)
 df <- as.data.frame(p)
 
@@ -34,6 +37,9 @@ p + geom_histogram()
 
 ```{r}
 
+
+
+## Scaling of the phenotypic data of Nec to the range of 0-1 based on the normalization method
 preproc2 <- preProcess(dat[,c(2:4)], method=c("range"))
 
 norm2 <- predict(preproc2, dat[,c(2:4)])
@@ -42,6 +48,7 @@ summary(norm2)
 
 write.csv(norm2, file ="/Users/daffy/Downloads/GWAS/phenotype/Nec_phenotype_norm2.csv")
 
+## Plot the data scaling results
 p <- read.csv('norm2_log.csv',header=T)
 df <- as.data.frame(p)
 
@@ -51,7 +58,9 @@ p + geom_histogram()
 
 ```{r}
 
-##---------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------------
+
+##Data scaling for phenotype Pyc
 dat <- read.csv("/Users/daffy/Downloads/Pyc_phenotype.csv")
 preproc1 <- preProcess(dat[,c(2:4)], method=c("center", "scale"))
 
@@ -90,6 +99,7 @@ p + geom_histogram()
 ```{r}
 
 ##---------------------------------------------------------------------------------
+##Data scaling for phenotype STB
 dat <- read.csv("/Users/daffy/Downloads/STB_phenotype.csv")
 preproc1 <- preProcess(dat[,c(2:4)], method=c("center", "scale"))
 
