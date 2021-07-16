@@ -1,7 +1,6 @@
 ---------------------------------
 title: "VCF_filtering_and_PCA"
 author: "Megan McDonald"
-date: "07/05/2020"
 output: html_doccment
 editor_options: 
   chunk_output_type: console
