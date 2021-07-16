@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ## Visualisation of the quality score of SNPs
 
- # Import VCF files
+ 
 ```{r}
 getwd()
 UNFILT<-read.delim("/Users/daffy/Downloads/GWAS/AUS_NZ_450.plain.first.tab", header=T, stringsAsFactors=T)
