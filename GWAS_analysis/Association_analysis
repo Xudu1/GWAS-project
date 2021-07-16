@@ -57,3 +57,78 @@ run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -f
 run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
 ```
 
+
+
+```{R}
+## We obtained the association analysis results as glm_GWAS.txt and mlm_GWAS.txt. 
+## Adjusted P values were calculated using both Bonferroni and false discovery rate (FDR) methods
+
+## # Calculate Bonferroni Correction and False Discovery Rate for GLM model
+library(dplyr)
+
+head(glm_GWAS)
+
+glm_adj <- read.table("glm_GWAS.txt", header = T, sep = "\t")
+
+
+
+glm_adj <- glm_GWAS %>%
+  transmute(Marker, Chr, Pos, p,
+            p_Bonferroni =  p.adjust(glm_GWAS$p,"bonferroni"),
+            p_FDR = p.adjust(glm_GWASs$p,"fdr")
+            )
+
+View(glm_adj)
+
+write.csv(glm_adj, file="/Users/daffy/Downloads/GWAS/glm_adj.csv", quote = T, eol = "\n", na= "NA")
+
+
+# QQ plot
+library(qqman)
+
+glm_p <- read.csv("glm_adj.csv", header = T)
+
+
+#plot qq plot for GLM model
+
+par(mfrow=c(1,3))
+qq(glm_p$p, main = "non-adjusted P-value")
+qq(glm_p$p_Bonferroni, main = "Bonferroni")
+qq(glm_p$p_FDR, main = "FDR")
+par(mfrow=c(1,1))
+```
+
+
+```{R}
+# Calculate Bonferroni Correction and False Discovery Rate for MLM model
+
+mlm_GWAS_adj <- read.table("mlm_GWAS.txt", header = T, sep = "\t")
+
+mlm_adj <- mlm_GWAS %>%
+  transmute(Marker, Chr, Pos, p,
+            p_Bonferroni =  p.adjust(mlm_GWAS$p,"bonferroni"),
+            p_FDR = p.adjust(mlm_GWASs$p,"fdr")
+            )
+
+View(mlm_adj)
+
+write.csv(mlm_adj, file="/Users/daffy/Downloads/GWAS/mlm_adj.csv", quote = T, eol = "\n", na= "NA")
+
+
+# QQ plot
+library(qqman)
+
+mlm_p <- read.csv("mlm_adj.csv", header = T)
+
+
+#plot qq plot for MLM model
+
+par(mfrow=c(1,3))
+qq(glm_p$p, main = "non-adjusted P-value")
+qq(glm_p$p_Bonferroni, main = "Bonferroni")
+qq(glm_p$p_FDR, main = "FDR")
+par(mfrow=c(1,1))
+```
+
+
+
