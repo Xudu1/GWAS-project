@@ -3,8 +3,6 @@ title: "VCF_filtering_and_PCA"
 author: "Xu Du"
 date: "11/06/2020"
 output: html_doccment
-editor_options: 
-  chunk_output_type: console
 ---------------------------------------------
 
 ```{r setup, include=FALSE}
