@@ -66,7 +66,7 @@ library(dplyr)
 
 head(glm_GWAS)
 
-glm_adj <- read.table("glm_GWAS.txt", header = T, sep = "\t")
+glm_adj <- read.table("/Users/daffy/Downloads/GWAS/glm_GWAS.txt", header = T, sep = "\t")
 
 
 
@@ -84,7 +84,7 @@ write.csv(glm_adj, file="/Users/daffy/Downloads/GWAS/glm_adj.csv", quote = T, eo
 # QQ plot
 library(qqman)
 
-glm_p <- read.csv("glm_adj.csv", header = T)
+glm_p <- read.csv("/Users/daffy/Downloads/GWAS/glm_adj.csv", header = T)
 
 
 #plot qq plot for GLM model
@@ -96,9 +96,9 @@ par(mfrow=c(1,1))
 
 
 # Manhattan plot for GLM model
-glm_GWAS <- read.table("glm_GWAS.txt", header = T, sep = "\t")
+glm_GWAS <- read.table("/Users/daffy/Downloads/GWAS/glm_GWAS.txt", header = T, sep = "\t")
 
-manhattan(glm_stats, chr="Chr", bp="Pos", snp="Marker", p="p", annotateTop = T,
+manhattan(glm_GWAS, chr="Chr", bp="Pos", snp="Marker", p="p", annotateTop = T, ylim=c(0,20),
           genomewideline = 5.8, suggestiveline = F)
 ```
 
@@ -107,7 +107,7 @@ manhattan(glm_stats, chr="Chr", bp="Pos", snp="Marker", p="p", annotateTop = T,
 ```{R}
 # Calculate Bonferroni Correction and False Discovery Rate for MLM model
 
-mlm_GWAS_adj <- read.table("mlm_GWAS.txt", header = T, sep = "\t")
+mlm_GWAS_adj <- read.table("/Users/daffy/Downloads/GWAS/mlm_GWAS.txt", header = T, sep = "\t")
 
 mlm_adj <- mlm_GWAS %>%
   transmute(Marker, Chr, Pos, p,
@@ -123,7 +123,7 @@ write.csv(mlm_adj, file="/Users/daffy/Downloads/GWAS/mlm_adj.csv", quote = T, eo
 # QQ plot
 library(qqman)
 
-mlm_p <- read.csv("mlm_adj.csv", header = T)
+mlm_p <- read.csv("/Users/daffy/Downloads/GWAS.mlm_adj.csv", header = T)
 
 
 #plot qq plot for MLM model
@@ -135,9 +135,9 @@ par(mfrow=c(1,1))
 ```
 
 # Manhattan plot for MLM model
-mlm_GWAS <- read.table("glm_GWAS.txt", header = T, sep = "\t")
+mlm_GWAS <- read.table("/Users/daffy/Downloads/GWAS/mlm_GWAS.txt", header = T, sep = "\t")
 
-manhattan(glm_stats, chr="Chr", bp="Pos", snp="Marker", p="p", annotateTop = T,
+manhattan(glm_GWAS, chr="Chr", bp="Pos", snp="Marker", p="p", annotateTop = T, ylim=c(0,20),
           genomewideline = 5.8, suggestiveline = F)
 ```
 
