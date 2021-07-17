@@ -90,8 +90,8 @@ glm_p <- read.csv("glm_adj.csv", header = T)
 #plot qq plot for GLM model
 par(mfrow=c(1,3))
 qq(glm_p$p, main = "non-adjusted P-value")
-qq(glm_p$p_Bonferroni, main = "Bonferroni")
-qq(glm_p$p_FDR, main = "FDR")
+qq(glm_p$p, main = "Bonferroni")
+qq(glm_p$p, main = "FDR")
 par(mfrow=c(1,1))
 
 
@@ -129,8 +129,8 @@ mlm_p <- read.csv("mlm_adj.csv", header = T)
 #plot qq plot for MLM model
 par(mfrow=c(1,3))
 qq(glm_p$p, main = "non-adjusted P-value")
-qq(glm_p$p_Bonferroni, main = "Bonferroni")
-qq(glm_p$p_FDR, main = "FDR")
+qq(glm_p$p, main = "Bonferroni")
+qq(glm_p$p, main = "FDR")
 par(mfrow=c(1,1))
 ```
 
