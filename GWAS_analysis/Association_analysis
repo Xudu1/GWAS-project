@@ -34,7 +34,7 @@ run_pipeline.pl -importGuess snp_4.hmp.txt -DistanceMatrixPlugin -endPlugin -exp
 run_pipeline.pl -importGuess snp_4.hmp.txt -KinshipPlugin -method Centered_IBS -endPlugin -export snp_kinship.txt -exportType SqrMatrix
 
 ## PCA analysis of genotype datasets
-run_pipeline.pl -fork1 -importGuess chr4.hmp.txt -PrincipalComponentsPlugin -covariance true -endPlugin -export output -runfork1
+run_pipeline.pl -fork1 -importGuess chr4.hmp.txt -PrincipalComponentsPlugin -covariance true -endPlugin -export snp_pca -runfork1
 ```
 
 
@@ -42,17 +42,17 @@ run_pipeline.pl -fork1 -importGuess chr4.hmp.txt -PrincipalComponentsPlugin -cov
 ```{bash}
 ## The following code shows only the GWAS analysis pepelines for the cultivars Arina and AUS4204, while the remaining cultivars share the same code
 
-## Association analysis of Arina cultivars using general linear models, integrating distance matrices, PCA matrices and kinship matrices
-run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r Arina_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export glm_GWAS
+## Association analysis of Arina cultivars using general linear models, integrating distance matrices, PCA matrices, genotype and phenotype
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r Arina_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export glm_GWAS
 
-## Association analysis of Arina cultivars using mixed linear models, integrating distance matrices, PCA matrices and kinship matrices
-run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r  Arina_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
+## Association analysis of Arina cultivars using mixed linear models, integrating distance matrices, PCA matrices, phenotype, phenotype and kinship matrices
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r Arina_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
 
 
 ## Association analysis of AUS4204 cultivar based on GLM and MLM models
-run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export glm_GWAS
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export glm_GWAS
 
-run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_4.5.Q.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -filterAlign -filterAlignMinCount 150 -filterAlignMinFreq 0.05 -filterAlignMaxFreq 1 -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
 ```
 
 
