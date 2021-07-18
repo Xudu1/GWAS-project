@@ -59,7 +59,7 @@ run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r AUS4204_phenotype.txt -fork3 -
 
 ```{R}
 ## We plotted the QQ and Manhattan plots both in R and in Tassel(GUI), Tassel(GUI) is based on a graphical operator interface  
-## We adopted tassel-based visualisation of the results, and the following code is used to visualise the results in R
+## We only adopted tassel-based visualisation of the results, and the following code is used to visualise the results in R
 
 ## We obtained the association analysis results as Arina_glm_GWAS.txt and Arina_mlm_GWAS.txt. 
 ## Adjusted P values were calculated using both Bonferroni and false discovery rate (FDR) methods
