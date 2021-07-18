@@ -159,11 +159,11 @@ This code reads in our filtered vcf with only 25 isolates and makes a small PCA 
 ```{r}
 getwd()
 setwd("cd /Users/daffy/Downloads/GWAS/VCF")
-snpgdsVCF2GDS("./joint_genotype/AUS25_Lorikeet.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_25.gds")
+snpgdsVCF2GDS("/Users/daffy/Downloads/GWAS/VCF/AUS25_Lorikeet.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_25.gds")
 genofile25<-openfn.gds("AUS_25.gds")
 
 AUS25_pca1<-snpgdsPCA(genofile25, autosome.only=F)
-sample.IDs<-read.table("./Isolate_details/AUS_25_popyear.txt", header=T)
+sample.IDs<-read.table("Users/daffy/Downloads/GWAS/VCF/AUS_25_popyear.txt", header=T)
 
 AUS25_pca1$sample <-sample.IDs$pop[which(AUS25_pca1$sample == sample.IDs$sample)]
 
@@ -171,7 +171,7 @@ pca.dat1 <- data.frame(eigen1=AUS25_pca1$eigenvect[,1],eigen2=AUS25_pca1$eigenve
 
 PCA_AUS25<-ggplot(pca.dat1, aes(x=eigen1, y=eigen2, color=pop)) +geom_point(size=0.01)+ geom_text(aes(label=samplename))
 PCA_AUS25
-ggsave("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/01_VCF_quality_check/PCA_AUS25.pdf", PCA_AUS25, height = 12,width=16,dpi=300,units = "cm")
+ggsave("Users/daffy/Downloads/GWAS/VCF/PCA_AUS25.pdf", PCA_AUS25, height = 12,width=16,dpi=300,units = "cm")
 
 interactive_AUS25<-ggplotly(PCA_AUS25)
 interactive_AUS25
@@ -203,11 +203,11 @@ This code reads in our filtered vcf with only 105 isolates and makes a small PCA
 ```{r}
 getwd()
 setwd("cd /Users/daffy/Downloads/GWAS/VCF")
-snpgdsVCF2GDS("./joint_genotype/AUS102_phenotyped.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_102.gds")
+snpgdsVCF2GDS("/Users/daffy/Downloads/GWAS/VCF/AUS102_phenotyped.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_102.gds")
 genofile102<-openfn.gds("AUS_102.gds")
 
 AUS102_pca1<-snpgdsPCA(genofile102, autosome.only=F)
-sample.IDs<-read.table("./Isolate_details/AUS_102_popyear.txt", header=T)
+sample.IDs<-read.table("/Users/daffy/Downloads/GWAS/VCF/AUS_102_popyear.txt", header=T)
 
 AUS102_pca1$sample <-sample.IDs$pop[which(AUS102_pca1$sample == sample.IDs$sample)]
 AUS102_pca1$sample
