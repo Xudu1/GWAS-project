@@ -43,48 +43,48 @@ run_pipeline.pl -fork1 -importGuess snp_4.hmp.txt -PrincipalComponentsPlugin -co
 ## The following code shows only the GWAS analysis pepelines for the cultivars Arina and AUS4204, while the remaining cultivars share the same code
 
 ## Association analysis of Arina cultivars using general linear models, integrating distance matrices, PCA matrices, genotype and phenotype
-run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r Arina_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export glm_GWAS
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r Arina_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export _Arina_glm_GWAS
 
 ## Association analysis of Arina cultivars using mixed linear models, integrating distance matrices, PCA matrices, phenotype, phenotype and kinship matrices
-run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r Arina_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r Arina_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export Arina_mlm_GWAS
 
 
 ## Association analysis of AUS4204 cultivar based on GLM and MLM models
-run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export glm_GWAS
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export AUS4204_glm_GWAS
 
-run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export mlm_GWAS
+run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r AUS4204_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export AUS4204_mlm_GWAS
 ```
 
 
 
 ```{R}
-## We obtained the association analysis results as glm_GWAS.txt and mlm_GWAS.txt. 
+## We obtained the association analysis results as Arina_glm_GWAS.txt and Arina_mlm_GWAS.txt. 
 ## Adjusted P values were calculated using both Bonferroni and false discovery rate (FDR) methods
 
-## # Calculate Bonferroni Correction and False Discovery Rate for GLM model
+## # Calculate Bonferroni Correction and False Discovery Rate for GLM model of Arina_cultivar
 library(dplyr)
 
-head(glm_GWAS)
+head(Arina_glm_GWAS)
 
-glm_adj <- read.table("/Users/daffy/Downloads/GWAS/glm_GWAS.txt", header = T, sep = "\t")
+glm_adj <- read.table("/Users/daffy/Downloads/GWAS/Arina_glm_GWAS.txt", header = T, sep = "\t")
 
 
 
-glm_adj <- glm_GWAS %>%
+glm_adj <- Arina_glm_GWAS %>%
   transmute(Marker, Chr, Pos, p,
-            p_Bonferroni =  p.adjust(glm_GWAS$p,"bonferroni"),
-            p_FDR = p.adjust(glm_GWASs$p,"fdr")
+            p_Bonferroni =  p.adjust(Arina_glm_GWAS$p,"bonferroni"),
+            p_FDR = p.adjust(Arina_glm_GWASs$p,"fdr")
             )
 
 View(glm_adj)
 
-write.csv(glm_adj, file="/Users/daffy/Downloads/GWAS/glm_adj.csv", quote = T, eol = "\n", na= "NA")
+write.csv(glm_adj, file="/Users/daffy/Downloads/GWAS/Arina_glm_adj.csv", quote = T, eol = "\n", na= "NA")
 
 
 # QQ plot
 library(qqman)
 
-glm_p <- read.csv("/Users/daffy/Downloads/GWAS/glm_adj.csv", header = T)
+glm_p <- read.csv("/Users/daffy/Downloads/GWAS/Arina_glm_adj.csv", header = T)
 
 
 #plot qq plot for GLM model
@@ -96,7 +96,7 @@ par(mfrow=c(1,1))
 
 
 # Manhattan plot for GLM model
-glm_GWAS <- read.table("/Users/daffy/Downloads/GWAS/glm_GWAS.txt", header = T, sep = "\t")
+glm_GWAS <- read.table("/Users/daffy/Downloads/GWAS/Arina_glm_GWAS.txt", header = T, sep = "\t")
 
 manhattan(glm_GWAS, chr="Chr", bp="Pos", snp="Marker", p="p", annotateTop = T, ylim=c(0,20),
           genomewideline = 5.8, suggestiveline = F)
@@ -107,23 +107,23 @@ manhattan(glm_GWAS, chr="Chr", bp="Pos", snp="Marker", p="p", annotateTop = T, y
 ```{R}
 # Calculate Bonferroni Correction and False Discovery Rate for MLM model
 
-mlm_GWAS_adj <- read.table("/Users/daffy/Downloads/GWAS/mlm_GWAS.txt", header = T, sep = "\t")
+mlm_adj <- read.table("/Users/daffy/Downloads/GWAS/Arina_mlm_GWAS.txt", header = T, sep = "\t")
 
-mlm_adj <- mlm_GWAS %>%
+mlm_adj <- Arina_mlm_GWAS %>%
   transmute(Marker, Chr, Pos, p,
             p_Bonferroni =  p.adjust(mlm_GWAS$p,"bonferroni"),
-            p_FDR = p.adjust(mlm_GWASs$p,"fdr")
+            p_FDR = p.adjust(Arina_mlm_GWAS$p,"fdr")
             )
 
 View(mlm_adj)
 
-write.csv(mlm_adj, file="/Users/daffy/Downloads/GWAS/mlm_adj.csv", quote = T, eol = "\n", na= "NA")
+write.csv(mlm_adj, file="/Users/daffy/Downloads/GWAS/Arina_mlm_adj.csv", quote = T, eol = "\n", na= "NA")
 
 
 # QQ plot
 library(qqman)
 
-mlm_p <- read.csv("/Users/daffy/Downloads/GWAS.mlm_adj.csv", header = T)
+mlm_p <- read.csv("/Users/daffy/Downloads/Arina_GWAS.mlm_adj.csv", header = T)
 
 
 #plot qq plot for MLM model
@@ -135,9 +135,9 @@ par(mfrow=c(1,1))
 ```
 
 # Manhattan plot for MLM model
-mlm_GWAS <- read.table("/Users/daffy/Downloads/GWAS/mlm_GWAS.txt", header = T, sep = "\t")
+mlm_GWAS <- read.table("/Users/daffy/Downloads/GWAS/Arina_mlm_GWAS.txt", header = T, sep = "\t")
 
-manhattan(glm_GWAS, chr="Chr", bp="Pos", snp="Marker", p="p", annotateTop = T, ylim=c(0,20),
+manhattan(mlm_GWAS, chr="Chr", bp="Pos", snp="Marker", p="p", annotateTop = T, ylim=c(0,20),
           genomewideline = 5.8, suggestiveline = F)
 ```
 
