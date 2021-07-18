@@ -21,7 +21,7 @@ phenotype_data_normalization.Rmd
 
 ## Population stratification analysis
 
-In plink, the VCF files containing the filtered SNPs were transformed to Map and Ped files (version 1.9). These two files were used to generate the bed, fam, and bim files in plink. The piplines of admixture were used to stratify the population structure of the bed files. 
+In plink, the VCF files containing the filtered SNPs were transformed to Map and Ped files. These two files were used to generate the bed, fam, and bim files in plink. The piplines of admixture were used to stratify the population structure of the bed files. 
 
 Population_structure.Rmd
 
