@@ -117,7 +117,7 @@ legend
 Combined<-plot_grid(QUALplot,QDplot,FSplot,SORplot,RMSplot,MQrankplot,RPrank, align="v", ncol = 2, axis="lrtb") 
 Combined
 getwd()
-ggsave("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/June2019_rajinMappedReads/GATK_vcfs/joint_genotype/NZ_AUS450_qualFilters.pdf", Combined, width = 24, height =32, units=c("cm"),dpi=300)
+ggsave("/Users/daffy/Downloads/GWAS/VCF/NZ_AUS450_qualFilters.pdf", Combined, width = 24, height =32, units=c("cm"),dpi=300)
 
 
 ```
