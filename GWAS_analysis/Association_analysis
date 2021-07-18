@@ -28,7 +28,6 @@ run_pipeline.pl -fork1 -vcf snp_3.vcf  -export snp_4 -exportType Hapmap -runfork
 ```{bash}
 ## TASSEL defines distance as 1-IBS (identity by state) similarity
 ## IBS is defined as the probability that two randomly selected individuals from the same locus have the same allele.
-run_pipeline.pl -importGuess snp_4.hmp.txt -DistanceMatrixPlugin -endPlugin -export snp_4_genotype_distance.txt
 
 ## Create a kinship matrix based on IBS methord
 run_pipeline.pl -importGuess snp_4.hmp.txt -KinshipPlugin -method Centered_IBS -endPlugin -export snp_kinship.txt -exportType SqrMatrix
@@ -42,10 +41,10 @@ run_pipeline.pl -fork1 -importGuess snp_4.hmp.txt -PrincipalComponentsPlugin -co
 ```{bash}
 ## The following code shows only the GWAS analysis pepelines for the cultivars Arina and AUS4204, while the remaining cultivars share the same code
 
-## Association analysis of Arina cultivars using general linear models, integrating distance matrices, PCA matrices, genotype and phenotype
+## Association analysis of Arina cultivars using general linear models, integrating distance PCA matrix, genotype and phenotype
 run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r Arina_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -combine4 -input1 -input2 -input3 -intersect -glm -export _Arina_glm_GWAS
 
-## Association analysis of Arina cultivars using mixed linear models, integrating distance matrices, PCA matrices, phenotype, phenotype and kinship matrices
+## Association analysis of Arina cultivars using mixed linear models, integrating PCA matrix, phenotype, phenotype and kinship matrices
 run_pipeline.pl -fork1 -h snp_4.hmp.txt -fork2 -r Arina_phenotype.txt -fork3 -q snp_pca.txt -excludeLastTrait -fork4 -k snp_kinship.txt -combine5 -input1 -input2 -input3 -intersect -combine6 -input5 -input4 -mlm -export Arina_mlm_GWAS
 
 
